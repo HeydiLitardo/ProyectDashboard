@@ -74,7 +74,12 @@ ui <- fluidPage(
                 background-color: #5b0e91;
                 padding: 0;
                 margin: 0;
-              }"),
+              }
+              .modal {
+                display: block;
+                opacity: 1;
+                }
+              "),
   tags$head(
     tags$link(
       rel = "stylesheet", href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css",
@@ -83,5 +88,9 @@ ui <- fluidPage(
     tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
   ),
   router,
-  tags$script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js", integrity = "sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz", crossorigin = "anonymous")
+  tags$script(
+    src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js",
+    integrity = "sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz",
+    crossorigin = "anonymous"
+  ),
 )

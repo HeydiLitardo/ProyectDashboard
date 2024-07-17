@@ -72,6 +72,9 @@ init_server <- function(id) {
       combined_xts_data <- do.call(cbind, xts_data_list)
 
       # Asignar nombres a las series
+      if (is.null(dim(combined_xts_data))) {
+        combined_xts_data <- matrix(combined_xts_data, ncol = 1)
+      }
       colnames(combined_xts_data) <- names(xts_data_list)
 
       dygraph(combined_xts_data) %>%

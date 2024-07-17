@@ -54,8 +54,8 @@ server <- function(input, output, session) {
   observeEvent(input$login_button, {
     if (nchar(input$email) == 0 || nchar(input$password) == 0) {
       showModal(modalDialog(
-        title = "Error de Login",
-        "Por favor, ingrese su usuario y contraseña.",
+        title = "Error de Inicio de Sesión",
+        "Por favor, complete todos los campos.",
         easyClose = TRUE,
         footer = NULL
       ))
@@ -65,8 +65,8 @@ server <- function(input, output, session) {
       session$sendCustomMessage(type = "redirect", message = list(url = "#!/index"))
     } else {
       showModal(modalDialog(
-        title = "Error de Login",
-        "Usuario o contraseña incorrectos.",
+        title = "Error de Inicio de Sesión",
+        "El usuario o la contraseña son incorrectos.",
         easyClose = TRUE,
         footer = NULL
       ))
@@ -182,7 +182,6 @@ server <- function(input, output, session) {
     }
     shinyjs::hide("loading")
   })
-
-
+  
   router_server()
 }
