@@ -2,6 +2,7 @@ import("shiny")
 import("dygraphs")
 import("glue")
 import("dplyr")
+import("lubridate")
 import("xts")
 
 export("ui")
@@ -44,6 +45,14 @@ init_server <- function(id) {
       }
     })
 
+    dy_bar_chart <- function(dygraph) {
+      dyPlotter(
+        dygraph = dygraph,
+        name = "BarChart",
+        path = system.file("plotters/barchart.js", package = "dygraphs")
+      )
+    }
+
     output$dygraph <- renderDygraph({
       req(data(), input$group_by)
 
@@ -55,10 +64,10 @@ init_server <- function(id) {
         return(NULL)
       }
 
-      # Convertir los datos a objeto xts
+      # Convertir los datos a objeto xts agrupado por semana
       df <- df %>%
         mutate(
-          Fecha.y.hora = as.POSIXct(Fecha.y.hora, format = "%d/%m/%Y, %I:%M:%S %p", tz = "UTC"),
+          Fecha.y.hora = floor_date(as.POSIXct(Fecha.y.hora, format = "%d/%m/%Y, %I:%M:%S %p", tz = "UTC"), "week"),
           Cantidad = as.numeric(gsub(",", ".", Cantidad))
         ) %>%
         filter(!is.na(Fecha.y.hora), !is.na(!!sym(group_by_column))) %>%
@@ -92,6 +101,7 @@ init_server <- function(id) {
       colnames(combined_xts_data) <- names(xts_data_list)
 
       dygraph(combined_xts_data) %>%
+        dy_bar_chart() %>%
         dyOptions(
           drawPoints = TRUE,
           pointSize = 2,
