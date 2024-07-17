@@ -1,0 +1,179 @@
+.dashboard-panels {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    width: 100%;
+}
+
+@media only screen and (min-width: 36em) {
+    .dashboard-panels {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (min-width: 67.5em) {
+    .dashboard-panels {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.panel {
+    border-radius: 6px;
+    box-shadow: 0 2px 8px -2px rgba(82, 82, 82, 0.4);
+    width: 100%;
+}
+
+.panel-chart {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+@media only screen and (min-width: 36em) {
+    .panel-chart {
+        grid-column: 1 / 2;
+    }
+}
+
+@media only screen and (min-width: 67.5em) {
+    .panel-chart {
+        grid-column: 1 / 2;
+    }
+}
+
+.panel-chart .panel-header {
+    position: absolute;
+    width: 100%;
+}
+
+.panel-chart .panel-header .selectize-control.single {
+    margin-bottom: 0;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input {
+    align-items: center;
+    background: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input>.item {
+    font-size: .875rem;
+    font-weight: 500;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input::after {
+    background-color: #525252;
+    border: none;
+    content: "";
+    display: flex;
+    height: 10px;
+    margin: 0;
+    mask-image: url(assets/icons/arrow.svg);
+    mask-size: 100%;
+    pointer-events: none;
+    position: static;
+    transition: transform .2s;
+    width: 10px;
+    -webkit-mask-image: url(assets/icons/arrow.svg);
+    -webkit-mask-size: 100%;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input>input {
+    display: none !important;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input.input-active {
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input.input-active::after {
+    transform: rotate(180deg);
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-dropdown {
+    animation: popUp .2s cubic-bezier(0.37, 1.44, 0.82, 1);
+    box-shadow: 0 2px 8px -2px rgba(82, 82, 82, 0.4);
+    position: absolute;
+    transform-origin: center top;
+    z-index: 9999;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input {
+    background-color: #15354A;
+    border-radius: 6px 6px 0 0;
+    padding: .4375rem .9375rem;
+    border: none;
+    min-height: 0;
+    transition: background-color .2s;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input>.item {
+    color: #fff;
+    font-size: .875rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input:hover {
+    background-color: #0099F9;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input::after {
+    background-color: #fff;
+    height: 15px;
+    mask-image: url(assets/icons/dots.svg);
+    width: 15px;
+    -webkit-mask-image: url(assets/icons/dots.svg);
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input.input-active {
+    border-color: #0099F9;
+    background-color: #0099F9;
+}
+
+.panel-chart .panel-header .selectize-control.single .selectize-input.input-active::after {
+    transform: scaleX(0);
+}
+
+.panel-chart .panel-header label {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+.panel-chart .panel-header .shiny-input-container {
+    width: 100%;
+}
+
+.panel-chart .breakdown-header {
+    background-color: #15354A;
+    border-radius: 6px 6px 0 0;
+    padding: .4375rem .9375rem;
+}
+
+.panel-chart .breakdown-header>.item {
+    color: #fff;
+    font-size: .875rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.chart-breakdown .chart-breakdown-container {
+    padding: 2.5rem .625rem .625rem;
+}
+
+.chart-time-container {
+    margin-top: 6%;
+    margin-bottom: 3%;
+}

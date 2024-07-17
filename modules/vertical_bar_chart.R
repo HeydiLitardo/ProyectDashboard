@@ -23,7 +23,7 @@ ui <- function(id) {
     ),
     tags$div(
       class = "chart-time-container",
-      dygraphOutput(ns("dygraph"), height = "350px")
+      dygraphOutput(ns("dygraph"), height = "320px", width = "100%")
     )
   )
 }
@@ -112,7 +112,8 @@ init_server <- function(id) {
           axisLabelFontSize = 12,
           axisLabelColor = "#585858",
           disableZoom = TRUE
-        )
+        ) %>%
+        dyAxis("x", label = "Semanas") # Etiquetar el eje x como "Semanas"
     })
   })
 }
