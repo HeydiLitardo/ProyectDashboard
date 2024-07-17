@@ -3,7 +3,7 @@
 library(dplyr)
 library(readr)
 
-clean_data <- function(filepath) {
+function(filepath) {
   # Leer el archivo CSV completo
   raw_data <- read.csv(filepath, header = FALSE, stringsAsFactors = FALSE)
   
