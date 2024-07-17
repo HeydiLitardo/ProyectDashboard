@@ -50,6 +50,11 @@ init_server <- function(id) {
       df <- data()
       group_by_column <- input$group_by
 
+      if (nrow(df) == 0) {
+        showNotification("No data available for the selected grouping column.", type = "error")
+        return(NULL)
+      }
+
       # Convertir los datos a objeto xts
       df <- df %>%
         mutate(
@@ -65,16 +70,25 @@ init_server <- function(id) {
       xts_data_list <- df %>%
         split(.[[group_by_column]]) %>%
         lapply(function(sub_df) {
-          xts(sub_df$Cantidad, order.by = sub_df$Fecha.y.hora)
+          if (nrow(sub_df) > 0) {
+            xts(sub_df$Cantidad, order.by = sub_df$Fecha.y.hora)
+          } else {
+            return(NULL)
+          }
         })
 
+      # Filtrar los NULL de la lista
+      xts_data_list <- Filter(Negate(is.null), xts_data_list)
+
       # Combinar todas las series xts
+      if (length(xts_data_list) == 0) {
+        showNotification("No data available after processing.", type = "error")
+        return(NULL)
+      }
+
       combined_xts_data <- do.call(cbind, xts_data_list)
 
       # Asignar nombres a las series
-      if (is.null(dim(combined_xts_data))) {
-        combined_xts_data <- matrix(combined_xts_data, ncol = 1)
-      }
       colnames(combined_xts_data) <- names(xts_data_list)
 
       dygraph(combined_xts_data) %>%
