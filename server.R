@@ -149,7 +149,7 @@ server <- function(input, output, session) {
     shinyjs::show("loading")
     req(input$file)
     ext <- tools::file_ext(input$file$datapath)
-    print(ext)
+
     if (ext == "csv") {
       data <- clean_data(input$file$datapath)
     } else if (ext == "xlsx") {
@@ -164,9 +164,7 @@ server <- function(input, output, session) {
       shinyjs::hide("loading")
       return(NULL)
     }
-
     print(data)
-
     # Verificar si las columnas existen antes de inicializar el gráfico
     required_columns <- c("Fecha.y.hora", "Cantidad")
     if (all(required_columns %in% colnames(data))) {
