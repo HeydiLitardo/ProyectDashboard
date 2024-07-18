@@ -10,7 +10,7 @@ export("init_server")
 
 ui <- function(id) {
   ns <- NS(id)
-
+  
   tagList(
     tags$div(
       class = "panel-header",
@@ -32,11 +32,11 @@ init_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     data <- reactiveVal(NULL)
     group_choices <- reactiveVal(NULL)
-
+    
     observe({
       req(session$userData$uploaded_data)
       df <- session$userData$uploaded_data()
-
+      
       # Set available group choices
       if (ncol(df) > 1) {
         group_choices <- names(df)[!(names(df) %in% c("Fecha.y.hora", "Cantidad"))]
@@ -47,18 +47,19 @@ init_server <- function(id) {
 
     output$dygraph <- renderDygraph({
       req(data(), input$group_by)
-
+      
       df <- data()
       group_by_column <- input$group_by
-
+      
       if (nrow(df) == 0) {
         showNotification("No data available for the selected grouping column.", type = "error")
         return(NULL)
       }
-
+      
       # Convertir los datos a objeto xts agrupado por semana
       df <- df %>%
         mutate(
+          Fecha.y.hora = floor_date(as.POSIXct(Fecha.y.hora, format = "%d/%m/%Y, %I:%M:%S %p", tz = "UTC"), "day"),
           Fecha.y.hora = floor_date(as.POSIXct(Fecha.y.hora, format = "%d/%m/%Y, %I:%M:%S %p", tz = "UTC"), "day"),
           Cantidad = as.numeric(gsub(",", ".", Cantidad))
         ) %>%
@@ -66,7 +67,7 @@ init_server <- function(id) {
         group_by(Fecha.y.hora, !!sym(group_by_column)) %>%
         summarize(Cantidad = sum(Cantidad, na.rm = TRUE)) %>%
         ungroup()
-
+      
       # Convertir los datos a objeto xts para cada grupo
       xts_data_list <- df %>%
         split(.[[group_by_column]]) %>%
@@ -77,21 +78,21 @@ init_server <- function(id) {
             return(NULL)
           }
         })
-
+      
       # Filtrar los NULL de la lista
       xts_data_list <- Filter(Negate(is.null), xts_data_list)
-
+      
       # Combinar todas las series xts
       if (length(xts_data_list) == 0) {
         showNotification("No data available after processing.", type = "error")
         return(NULL)
       }
-
+      
       combined_xts_data <- do.call(cbind, xts_data_list)
-
+      
       # Asignar nombres a las series
       colnames(combined_xts_data) <- names(xts_data_list)
-
+      
       dygraph(combined_xts_data) %>%
         dyOptions(
           drawPoints = TRUE,
@@ -106,7 +107,7 @@ init_server <- function(id) {
           drawGapEdgePoints = TRUE,
           connectSeparatedPoints = TRUE
         ) %>%
-        dyAxis("x", label = "Semanas") # Etiquetar el eje x como "Semanas"
+        dyAxis("x", label = "Fecha")
     })
   })
 }
