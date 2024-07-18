@@ -19,8 +19,6 @@ clean_data <- function(filepath) {
   cleaned_data <- raw_data[-c(1, 2), ]
   colnames(cleaned_data) <- headers
   
-  cleaned_data <- head(cleaned_data, 10)
-  
   # Eliminar "a. m." y "p. m." de la columna de fecha y hora
   cleaned_data$Fecha.y.hora <- gsub("a. m.", "", cleaned_data$Fecha.y.hora)
   cleaned_data$Fecha.y.hora <- gsub("p. m.", "", cleaned_data$Fecha.y.hora)
