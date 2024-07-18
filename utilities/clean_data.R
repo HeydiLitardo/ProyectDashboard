@@ -22,5 +22,7 @@ function(filepath) {
     mutate(`Fecha.y.hora` = as.POSIXct(`Fecha.y.hora`, format = "%d/%m/%Y, %I:%M:%S %p", tz = "UTC")) %>%
     filter(!is.na(`Fecha.y.hora`))
   
+  print(cleaned_data)
+  
   return(cleaned_data)
 }
