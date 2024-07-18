@@ -1,8 +1,42 @@
 library(shiny)
 library(RSQLite)
 library(shiny.router)
+library(dplyr)
+library(readr)
+# clean_data.R
 
-source("utilities/clean_data.R")
+clean_data <- function(filepath) {
+  # Leer el archivo CSV completo
+  raw_data <- read.csv(filepath, header = FALSE, stringsAsFactors = FALSE)
+  
+  # Extraer la segunda fila como encabezado
+  headers <- raw_data[2, ]
+  
+  # Hacer que los nombres de las columnas sean únicos
+  headers <- make.names(headers, unique = TRUE)
+  
+  # Remover las dos primeras filas y asignar los nuevos encabezados
+  cleaned_data <- raw_data[-c(1, 2), ]
+  colnames(cleaned_data) <- headers
+  
+  cleaned_data <- head(cleaned_data, 10)
+  
+  # Eliminar "a. m." y "p. m." de la columna de fecha y hora
+  cleaned_data$Fecha.y.hora <- gsub("a. m.", "", cleaned_data$Fecha.y.hora)
+  cleaned_data$Fecha.y.hora <- gsub("p. m.", "", cleaned_data$Fecha.y.hora)
+  
+  # Convertir la columna `Fecha.y.hora` a tipo POSIXct y filtrar filas con NA
+  cleaned_data <- cleaned_data %>%
+    mutate(`Fecha.y.hora` = as.POSIXct(`Fecha.y.hora`, format = "%d/%m/%Y, %I:%M:%S", tz = "UTC")) %>%
+    filter(!is.na(`Fecha.y.hora`))
+  
+  print(cleaned_data)
+
+  return(cleaned_data)
+}
+
+
+
 
 daily_stats <-
   read.csv("data/daily_stats.csv", header = TRUE, stringsAsFactors = TRUE) %>%
@@ -149,7 +183,6 @@ server <- function(input, output, session) {
     shinyjs::show("loading")
     req(input$file)
     ext <- tools::file_ext(input$file$datapath)
-
     if (ext == "csv") {
       data <- clean_data(input$file$datapath)
     } else if (ext == "xlsx") {
@@ -164,7 +197,7 @@ server <- function(input, output, session) {
       shinyjs::hide("loading")
       return(NULL)
     }
-    print(data)
+
     # Verificar si las columnas existen antes de inicializar el gráfico
     required_columns <- c("Fecha.y.hora", "Cantidad")
     if (all(required_columns %in% colnames(data))) {
