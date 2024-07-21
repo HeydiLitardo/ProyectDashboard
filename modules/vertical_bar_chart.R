@@ -23,7 +23,7 @@ ui <- function(id) {
     ),
     tags$div(
       class = "chart-time-container",
-      dygraphOutput(ns("dygraph"), height = "320px", width = "100%")
+      dygraphOutput(ns("dygraph"), height = "240px", width = "100%")
     )
   )
 }
@@ -45,14 +45,6 @@ init_server <- function(id) {
       }
     })
 
-    dy_bar_chart <- function(dygraph) {
-      dyPlotter(
-        dygraph = dygraph,
-        name = "BarChart",
-        path = system.file("plotters/barchart.js", package = "dygraphs")
-      )
-    }
-
     output$dygraph <- renderDygraph({
       req(data(), input$group_by)
 
@@ -67,7 +59,7 @@ init_server <- function(id) {
       # Convertir los datos a objeto xts agrupado por semana
       df <- df %>%
         mutate(
-          Fecha.y.hora = floor_date(as.POSIXct(Fecha.y.hora, format = "%d/%m/%Y, %I:%M:%S %p", tz = "UTC"), "week"),
+          Fecha.y.hora = floor_date(as.POSIXct(Fecha.y.hora, format = "%d/%m/%Y, %I:%M:%S %p", tz = "UTC"), "day"),
           Cantidad = as.numeric(gsub(",", ".", Cantidad))
         ) %>%
         filter(!is.na(Fecha.y.hora), !is.na(!!sym(group_by_column))) %>%
@@ -101,17 +93,18 @@ init_server <- function(id) {
       colnames(combined_xts_data) <- names(xts_data_list)
 
       dygraph(combined_xts_data) %>%
-        dy_bar_chart() %>%
         dyOptions(
           drawPoints = TRUE,
           pointSize = 2,
-          strokeWidth = 1.5,
-          includeZero = TRUE,
-          axisLineColor = "#585858",
+          strokeWidth = 3,  # Incrementar el grosor de las líneas
+          axisLineColor = "#2F184B",
           gridLineColor = "#bdc2c6",
           axisLabelFontSize = 12,
           axisLabelColor = "#585858",
-          disableZoom = TRUE
+          disableZoom = TRUE,
+          stepPlot = FALSE,  # Asegurarse de que stepPlot esté deshabilitado
+          drawGapEdgePoints = TRUE,
+          connectSeparatedPoints = TRUE
         ) %>%
         dyAxis("x", label = "Semanas") # Etiquetar el eje x como "Semanas"
     })

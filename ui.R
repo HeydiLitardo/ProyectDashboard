@@ -54,6 +54,9 @@ index_page <- htmlTemplate(
     onclick = "document.getElementById('file').click();"
   ),
   vertical_bar_chart = vertical_bar_chart$ui("time_chart"),
+  pie_chart = pie_chart$ui("summary_pie_chart"),
+  line_chart = line_chart$ui("summary_line_chart"),
+  vertical_chart = vertical_chart$ui("summary_vertical_chart"),
   contents = tableOutput("contents")
 )
 
@@ -71,7 +74,7 @@ ui <- fluidPage(
   tags$style("#test {
                 width: 100%;
                 height: 100vh;
-                background-color: #5b0e91;
+                background-color: ##F4EFFA;
                 padding: 0;
                 margin: 0;
               }

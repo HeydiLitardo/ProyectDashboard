@@ -27,18 +27,7 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-}
-
-@media only screen and (min-width: 36em) {
-    .panel-chart {
-        grid-column: 1 / 2;
-    }
-}
-
-@media only screen and (min-width: 67.5em) {
-    .panel-chart {
-        grid-column: 1 / 2;
-    }
+    background-color: #FFF;
 }
 
 .panel-chart .panel-header {
@@ -101,7 +90,7 @@
 }
 
 .panel-chart .panel-header .selectize-control.single .selectize-input {
-    background-color: #15354A;
+    background-color: #2F184B;
     border-radius: 6px 6px 0 0;
     padding: .4375rem .9375rem;
     border: none;
@@ -118,7 +107,7 @@
 }
 
 .panel-chart .panel-header .selectize-control.single .selectize-input:hover {
-    background-color: #0099F9;
+    background-color: #9B72CF;
 }
 
 .panel-chart .panel-header .selectize-control.single .selectize-input::after {
@@ -130,8 +119,8 @@
 }
 
 .panel-chart .panel-header .selectize-control.single .selectize-input.input-active {
-    border-color: #0099F9;
-    background-color: #0099F9;
+    border-color: #C8B1E4;
+    background-color: #C8B1E4;
 }
 
 .panel-chart .panel-header .selectize-control.single .selectize-input.input-active::after {
@@ -156,7 +145,7 @@
 }
 
 .panel-chart .breakdown-header {
-    background-color: #15354A;
+    background-color: #2F184B;
     border-radius: 6px 6px 0 0;
     padding: .4375rem .9375rem;
 }

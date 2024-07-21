@@ -8,28 +8,26 @@ library(readr)
 clean_data <- function(filepath) {
   # Leer el archivo CSV completo
   raw_data <- read.csv(filepath, header = FALSE, stringsAsFactors = FALSE)
-  
+
   # Extraer la segunda fila como encabezado
   headers <- raw_data[2, ]
-  
+
   # Hacer que los nombres de las columnas sean únicos
   headers <- make.names(headers, unique = TRUE)
-  
+
   # Remover las dos primeras filas y asignar los nuevos encabezados
   cleaned_data <- raw_data[-c(1, 2), ]
   colnames(cleaned_data) <- headers
-  
-  cleaned_data <- head(cleaned_data, 10)
-  
+
   # Eliminar "a. m." y "p. m." de la columna de fecha y hora
   cleaned_data$Fecha.y.hora <- gsub("a. m.", "", cleaned_data$Fecha.y.hora)
   cleaned_data$Fecha.y.hora <- gsub("p. m.", "", cleaned_data$Fecha.y.hora)
-  
+
   # Convertir la columna `Fecha.y.hora` a tipo POSIXct y filtrar filas con NA
   cleaned_data <- cleaned_data %>%
     mutate(`Fecha.y.hora` = as.POSIXct(`Fecha.y.hora`, format = "%d/%m/%Y, %I:%M:%S", tz = "UTC")) %>%
     filter(!is.na(`Fecha.y.hora`))
-  
+
   print(cleaned_data)
 
   return(cleaned_data)
@@ -178,6 +176,10 @@ server <- function(input, output, session) {
     input$previous_time_range
   })
 
+  pie_chart$init_server("summary_pie_chart")
+  line_chart$init_server("summary_line_chart")
+  vertical_chart$init_server("summary_vertical_chart")
+
   # Manejar la carga de archivos
   observeEvent(input$file, {
     shinyjs::show("loading")
@@ -215,6 +217,6 @@ server <- function(input, output, session) {
     }
     shinyjs::hide("loading")
   })
-  
+
   router_server()
 }

@@ -1,6 +1,6 @@
 .container {
-    background: rgb(88, 37, 124);
-    background: linear-gradient(0deg, rgba(88, 37, 124, 1) 0%, rgba(154, 84, 203, 1) 100%);
+    background: #532b88;
+    background: linear-gradient(180deg, rgba(83, 43, 136, 1) 0%, rgba(83, 43, 136, 0.5) 100%);
     width: 65%;
     display: flex;
     border-radius: 10px;
@@ -21,12 +21,12 @@
 
 .nav-link:active {
     font-weight: bold;
-    background-color: #5b0e91 !important;
+    background-color: #532b88 !important;
 }
 
 .active {
     font-weight: bold;
-    background-color: #5b0e91 !important;
+    background-color: #532b88 !important;
 }
 
 .left-side {
@@ -58,7 +58,7 @@
 
 .buttons a {
     background-color: white;
-    color: #5b0e91;
+    color: #532b88;
     border: none;
     padding: 10px 20px;
     margin: 5px;
@@ -75,7 +75,7 @@
 
 .right-side {
     background: rgb(221, 209, 230);
-    background: radial-gradient(circle, rgba(221, 209, 230, 1) 0%, rgba(211, 158, 250, 0.5) 100%);
+    background: radial-gradient(circle, rgba(221, 209, 230, 1) 0%, rgba(221, 209, 230, 0.5) 100%);
     padding: 18px;
     margin: 15px;
     border-radius: 18px;
@@ -129,14 +129,14 @@ form input {
 }
 
 .terms a {
-    color: #5b0e91;
+    color: #532b88;
     text-decoration: none;
     margin: 0;
     padding: 0;
 }
 
 form button {
-    background-color: #5b0e91;
+    background-color: #532b88;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -147,7 +147,7 @@ form button {
 }
 
 form button:hover {
-    background-color: #4a0b74;
+    background-color: #532b88;
 }
 
 /* Media Queries */
@@ -189,9 +189,49 @@ form button:hover {
     }
 }
 
+.sidebar {
+    width: 15%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+}
+
+.sidebar .nav-link .bi {
+    margin-right: 4px;
+    fill: currentColor;
+}
+
+.sidebar .nav-link:hover .bi {
+    color: #532b88;
+}
+
+.sidebar .nav-link.active,
+.sidebar .nav-link.active .bi {
+    color: #fff;
+    background-color: #532b88;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+}
+
+.sidebar .nav-link.active {
+    border-radius: 0.25rem;
+}
+
+
 :root,
 [data-bs-theme=light] {
-    --bs-blue: #5b0e91;
+    --bs-blue: #532b88;
     --bs-indigo: #6610f2;
     --bs-purple: #6f42c1;
     --bs-pink: #d63384;
@@ -214,7 +254,7 @@ form button:hover {
     --bs-gray-700: #495057;
     --bs-gray-800: #343a40;
     --bs-gray-900: #212529;
-    --bs-primary: #5b0e91;
+    --bs-primary: #532b88;
     --bs-secondary: #6c757d;
     --bs-success: #198754;
     --bs-info: #0dcaf0;
@@ -222,7 +262,7 @@ form button:hover {
     --bs-danger: #dc3545;
     --bs-light: #f8f9fa;
     --bs-dark: #212529;
-    --bs-primary-rgb: 91, 14, 145;
+    --bs-primary-rgb: 83, 43, 136;
     --bs-secondary-rgb: 108, 117, 125;
     --bs-success-rgb: 25, 135, 84;
     --bs-info-rgb: 13, 202, 240;
@@ -278,10 +318,10 @@ form button:hover {
     --bs-tertiary-bg: #f8f9fa;
     --bs-tertiary-bg-rgb: 248, 249, 250;
     --bs-heading-color: inherit;
-    --bs-link-color: #5b0e91;
+    --bs-link-color: #532b88;
     --bs-link-color-rgb: 91, 14, 145;
     --bs-link-decoration: underline;
-    --bs-link-hover-color: #5b0e91;
+    --bs-link-hover-color: #532b88;
     --bs-link-hover-color-rgb: 10, 88, 202;
     --bs-code-color: #d63384;
     --bs-highlight-color: #212529;
