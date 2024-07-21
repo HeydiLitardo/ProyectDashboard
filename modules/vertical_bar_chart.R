@@ -44,7 +44,7 @@ init_server <- function(id) {
         data(df)
       }
     })
-
+    
     output$dygraph <- renderDygraph({
       req(data(), input$group_by)
       
@@ -97,13 +97,13 @@ init_server <- function(id) {
         dyOptions(
           drawPoints = TRUE,
           pointSize = 2,
-          strokeWidth = 3,  # Incrementar el grosor de las líneas
-          axisLineColor = "#2F184B",
+          strokeWidth = 3, 
+          axisLineColor = "#585858",
           gridLineColor = "#bdc2c6",
           axisLabelFontSize = 12,
           axisLabelColor = "#585858",
           disableZoom = TRUE,
-          stepPlot = FALSE,  # Asegurarse de que stepPlot esté deshabilitado
+          stepPlot = FALSE,  
           drawGapEdgePoints = TRUE,
           connectSeparatedPoints = TRUE
         ) %>%
